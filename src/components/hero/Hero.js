@@ -9,13 +9,36 @@ import Button from "react-bootstrap/Button";
 const Hero = ({ movies }) => {
   const navigate = useNavigate();
 
-  function reviews(movieId) {
+  const reviews = (movieId) => {
     navigate(`/Reviews/${movieId}`);
-  }
+  };
 
   return (
     <div className="movie-carousel-container">
-      <Carousel>
+      <Carousel
+        indicators={true}
+        indicatorContainerProps={{
+          style: {
+            position: "absolute",
+            bottom: "16px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+            marginTop: 0,
+          },
+        }}
+        indicatorIconButtonProps={{
+          style: {
+            padding: "6px",
+            color: "rgba(255,255,255,0.45)",
+          },
+        }}
+        activeIndicatorIconButtonProps={{
+          style: {
+            color: "gold",
+          },
+        }}
+      >
         {movies?.map((movie) => {
           const backdrop = movie?.backdrops?.[0] || movie?.poster || "";
           const trailerId = movie?.trailerLink
