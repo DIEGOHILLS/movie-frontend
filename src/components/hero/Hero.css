@@ -1,15 +1,18 @@
 .movie-carousel-container{
-  position:relative;  
+  position: relative;
   width: 100%;
   height: calc(100vh - 56px);
   background-color: black;
-  overflow: hidden;
+  overflow: visible;
 }
+
 
 .movie-card-container{
   background-color: black;
   height: calc(100vh - 56px);
+  overflow: hidden;
 }
+
 
 .movie-card{
   position: relative;

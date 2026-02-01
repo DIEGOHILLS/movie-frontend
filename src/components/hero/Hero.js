@@ -20,17 +20,17 @@ const Hero = ({ movies }) => {
         indicatorContainerProps={{
           style: {
             position: "absolute",
-            bottom: "16px",
             left: "50%",
+            bottom: "14px",
             transform: "translateX(-50%)",
-            zIndex: 10,
+            zIndex: 9999,
             marginTop: 0,
           },
         }}
         indicatorIconButtonProps={{
           style: {
             padding: "6px",
-            color: "rgba(255,255,255,0.45)",
+            color: "rgba(255,255,255,0.55)",
           },
         }}
         activeIndicatorIconButtonProps={{
@@ -46,7 +46,7 @@ const Hero = ({ movies }) => {
             : "";
 
           return (
-            <Paper key={movie.imdbId}>
+            <Paper key={movie.imdbId} style={{ background: "transparent" }} elevation={0}>
               <div className="movie-card-container">
                 <div className="movie-card" style={{ "--img": `url(${backdrop})` }}>
                   <div className="movie-detail">
