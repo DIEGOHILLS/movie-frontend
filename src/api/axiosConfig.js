@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "https://movie-swuu.onrender.com/api/v1/movies",
   headers: {
     "Content-Type": "application/json"
   }
