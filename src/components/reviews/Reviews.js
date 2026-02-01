@@ -1,87 +1,87 @@
-import { useEffect, useRef } from 'react';
-import api from '../../api/axiosConfig';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import ReviewForm from '../reviewForm/ReviewForm';
-import React from 'react';
+import { useEffect, useRef } from "react";
+import api from "../../api/axiosConfig";
+import { useParams } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import ReviewForm from "../reviewForm/ReviewForm";
+import React from "react";
 
 const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
+  const revText = useRef();
+  const { movieId } = useParams();
 
-    const revText = useRef();
-    let params = useParams();
-    const movieId = params.movieId;
+  useEffect(() => {
+    if (!movieId) return;
+    getMovieData(movieId);
+  }, [movieId, getMovieData]);
 
-    useEffect(() => {
-        getMovieData(movieId);
-    }, []);
+  const addReview = async (e) => {
+    e.preventDefault();
 
-    const addReview = async (e) => {
-        e.preventDefault();
+    const rev = revText.current;
 
-        const rev = revText.current;
+    try {
+      await api.post("/reviews", {
+        reviewBody: rev.value,
+        imdbId: movieId,
+      });
 
-        try {
-            // ✅ FIXED
-            await api.post("/reviews", {
-                reviewBody: rev.value,
-                imdbId: movieId
-            });
+      const updatedReviews = [...(reviews || []), { body: rev.value }];
 
-            const updatedReviews = [...reviews, { body: rev.value }];
+      rev.value = "";
+      setReviews(updatedReviews);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-            rev.value = "";
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <h3>Reviews</h3>
+        </Col>
+      </Row>
 
-            setReviews(updatedReviews);
+      <Row className="mt-2">
+        <Col>
+          <img src={movie?.poster} alt="" />
+        </Col>
 
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    return (
-        <Container>
+        <Col>
+          <>
             <Row>
-                <Col><h3>Reviews</h3></Col>
+              <Col>
+                <ReviewForm
+                  handleSubmit={addReview}
+                  revText={revText}
+                  labelText="Write a Review?"
+                />
+              </Col>
             </Row>
 
-            <Row className="mt-2">
-                <Col>
-                    <img src={movie?.poster} alt="" />
-                </Col>
-
-                <Col>
-                    <>
-                        <Row>
-                            <Col>
-                                <ReviewForm
-                                    handleSubmit={addReview}
-                                    revText={revText}
-                                    labelText="Write a Review?"
-                                />
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col><hr /></Col>
-                        </Row>
-                    </>
-
-                    {
-                        reviews?.map((r, index) => (
-                            <React.Fragment key={index}>
-                                <Row>
-                                    <Col>{r.body}</Col>
-                                </Row>
-                                <Row>
-                                    <Col><hr /></Col>
-                                </Row>
-                            </React.Fragment>
-                        ))
-                    }
-                </Col>
+            <Row>
+              <Col>
+                <hr />
+              </Col>
             </Row>
-        </Container>
-    );
+          </>
+
+          {(reviews || []).map((r, index) => (
+            <React.Fragment key={index}>
+              <Row>
+                <Col>{r.body}</Col>
+              </Row>
+              <Row>
+                <Col>
+                  <hr />
+                </Col>
+              </Row>
+            </React.Fragment>
+          ))}
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default Reviews;
