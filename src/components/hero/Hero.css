@@ -1,12 +1,13 @@
 .movie-carousel-container{
   width: 100%;
-  overflow-x: hidden;
+  height: calc(100vh - 56px);
+  overflow: hidden;
   background-color: black;
 }
 
 .movie-card-container{
   background-color: black;
-  height: clamp(460px, 70vh, 680px);
+  height: calc(100vh - 56px);
 }
 
 .movie-card{
@@ -51,17 +52,21 @@
 .movie-title{
   color: white;
   min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .movie-title h4{
   margin: 0;
-  font-size: clamp(18px, 2.4vw, 34px);
+  font-size: clamp(18px, 2.4vw, 38px);
   line-height: 1.15;
   letter-spacing: 0.2px;
   text-shadow: 0 10px 24px rgba(0,0,0,0.75);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 70ch;
 }
 
 .movie-buttons-container{
@@ -69,10 +74,6 @@
   align-items: center;
   gap: 14px;
   justify-content: flex-end;
-}
-
-.play-button-icon-container{
-  width: auto;
 }
 
 .play-button-icon{
@@ -100,6 +101,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    max-width: 30ch;
   }
 
   .movie-buttons-container{
